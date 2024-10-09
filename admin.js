@@ -1,4 +1,4 @@
-import { Grupo } from "./app.js";
+import { Grupo , Alumno} from "./app.js";
 
 const nombreGrupo = document.getElementById('nombreGrupo');
 const nombreMateria = document.getElementById('nombreMateria');
@@ -36,9 +36,7 @@ class CrearGrupo extends CrearElementos {
         // Verifica si el grupo ya existe
         if (!this.grupos.some(g => g.nombre === nombreGrupo)) {
             // Crea una instancia de la clase Grupo
-            const nuevoGrupo = new Grupo(nombreGrupo);
-            nuevoGrupo.id = this.generateID();
-            console.log(nuevoGrupo.id);
+            const nuevoGrupo = new Grupo(nombreGrupo, this.generateID());
             this.grupos.push(nuevoGrupo);
             this.saveToLocalStorage();
             imprimirGruposEnTabla();
@@ -62,7 +60,11 @@ class CrearGrupo extends CrearElementos {
 
     loadFromLocalStorage() {
         const gruposGuardados = JSON.parse(localStorage.getItem('grupos'));
-        return gruposGuardados ? gruposGuardados.map(grupo => Object.assign(new Grupo(), grupo)) : [];
+        return gruposGuardados ? gruposGuardados.map(grupo => {
+            const nuevoGrupo = Object.assign(new Grupo(grupo.nombre, grupo.id), grupo);
+            nuevoGrupo.alumnos = grupo.alumnos.map(alumno => Object.assign(new Alumno(alumno.id, alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, alumno.edad), alumno));
+            return nuevoGrupo;
+        }) : [];
     }
 }
 

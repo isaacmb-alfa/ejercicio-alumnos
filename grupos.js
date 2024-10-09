@@ -15,10 +15,10 @@ class ActualizarAlumnos {
         if (this.alumnosArray) {
             let alumnos = this.alumnosArray;
             alumnos.forEach((alumno) => {
-                const { id, nombre, apellidoPaterno } = alumno;
+                const { id, nombre, apellidoPaterno, apellidoMaterno } = alumno;
                 const valorSelect = document.createElement('option');
                 valorSelect.value = id;
-                valorSelect.innerHTML = `${apellidoPaterno}-${nombre}`;
+                valorSelect.innerHTML = `${apellidoPaterno}-${apellidoMaterno}-${nombre}`;
                 selectAlumnos.querySelector('select').appendChild(valorSelect);
             });
         }
