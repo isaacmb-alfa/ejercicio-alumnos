@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Alumnos</title>
+    <!-- Enlace a Bootstrap 5.x -->
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+
+<body>
+    <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+    </nav>
+    <div class="container mt-5">
+        <h3>Asignar Materias Alumnos</h3>
+    </div>
+    <div class="alumnos-inscritos container">
+        <form id="alumnosInscritosSelect" action="">
+            <div class="mt-5 col-md-3">
+                <label for="alumnos" class="form-label">Nombre del Alumno</label>
+                <select class="form-control" name="alumnos">
+                    <option value="">--Seleccione Alumno--</option>
+                    <!-- <option value="value2">Value 2</option> -->
+                    <!-- <option value="value3">Value 3</option> -->
+                </select>
+            </div>
+        </form>
+    </div>
+    <div class="formulario container">
+        <form class="mt-5" id="registroForm">
+            <div class="row d-flex flex-wrap justify-content-center">
+                <div id="mensaje" class="col-md-6 d-flex flex-wrap justify-content-center h-100 rounded bg-opacity-75">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="materias" class="form-label">Asigna una Materia</label>
+                    <select class="form-control" name="materias">
+                        <option value="">--Seleccione una Materia--</option>
+                        <!-- <option value="value2">Value 2</option> -->
+                        <!-- <option value="value3">Value 3</option> -->
+                    </select>
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="calificacion" class="form-label">Calificación</label>
+                    <input type="number" class="form-control" id="calificacion" name="calificacion">
+                </div>
+                <div class="col-md-2 d-flex align-content-end flex-wrap">
+                    <div class="row w-100">
+                        <button type="submit" class="btn btn-primary mb-3">Asignar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container mt-5">
+        <h2>Listado de Alumnos</h2>
+        <div class="row d-grid cards-grupos mt-3" id="cards">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                            of the card's content.</p>
+                        <ul id="alumnosInscritos_${id}" class="list-group list-group-flush d-flex">
+                            <h5>Materias Asignadas</h5>
+                            <li class="form-control my-1 ">Matemáticas <span>9.2</span></li>
+                            <li class="form-control my-1">Español</li>
+                        </ul>
+                        <div class="calcular-promedio d-flex align-self-center">
+                            <button id="calcularPromediobtn" class="btn btn-sm btn-primary">Calcular
+                                Promedio</button>
+                            <p class="ms-3 mb-0">9.5</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enlace a Bootstrap y JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./materias.js"></script>
+    <script type="module" src="./nav.js"></script>
+</body>
+
+</html>

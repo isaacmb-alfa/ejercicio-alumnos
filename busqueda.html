@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Alumnos</title>
+    <!-- Enlace a Bootstrap 5.x -->
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+
+<body>
+    <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+    </nav>
+    <div class="container mt-5">
+        <h2>Busqueda de Alumnos</h2>
+        <form class="mt-5" id="buscarForm">
+            <div class="row">
+                <div class="mb-3 col-6">
+                    <label for="busquedaNombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="busquedaNombre" name="busquedaNombre">
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="buscarApelido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="buscarApelido" name="buscarApelido">
+                </div>
+                <div class="container d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary col-4">Buscar</button>
+                </div>
+            </div>
+            <form>
+                <fieldset>
+                    <legend>Ordenar</legend>
+                    <div class="input-group">
+                    <div class="input-group-text p-2">
+                        <input class="form-check-input mt-0" type="radio" id="descendente" name="ordenar"
+                            value="descendente" />
+                        <label for="descendente" class="ms-2">Email</label>
+
+                        <input class="form-check-input mt-0 ms-2" type="radio" id="apellidoPaterno" name="ordenar"
+                            value="apellidoPaterno" />
+                        <label for="apellidoPaterno" class="ms-2">Apellido Paterno</label>
+                    </div>
+                    </div>
+                </fieldset>
+            </form>
+    </div>
+    </div>
+    <div class="table-busqueda container mt-5">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Grupo</th>
+                    <th scope="col">Promedio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Abraham</td>
+                    <td>Perez</td>
+                    <td>Chávez</td>
+                    <td>38 años</td>
+                    <td>1° "A"</td>
+                    <td>8.7</td>
+                </tr>
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <th scope="row">3</th>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Enlace a Bootstrap y JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./busqueda.js"></script>
+    <script type="module" src="./nav.js"></script>
+
+</body>
+
+</html>

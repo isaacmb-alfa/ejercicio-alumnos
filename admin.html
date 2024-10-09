@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Alumnos</title>
+    <!-- Enlace a Bootstrap 5.x -->
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+
+<body>
+    <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <form id="crearGrupo" action="">
+
+                    <div class="mb-3 ">
+                        <label for="nombreGrupo" class="form-label">Nombre del Grupo</label>
+                        <input type="text" class="form-control" id="nombreGrupo" name="nombreGrupo">
+                    </div>
+                    <div class=" d-flex align-content-end flex-wrap">
+                        <div class=" w-100">
+                            <button type="submit" class="btn btn-primary mb-3">Guardar Grupo</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form id="crearMateria" action="">
+                    <div class="mb-3">
+                        <label for="nombreMateria" class="form-label">Nombre de la Materia</label>
+                        <input type="text" class="form-control" id="nombreMateria" name="nombreMateria">
+                    </div>
+                    <div class="d-flex align-content-end flex-wrap">
+                        <div class="r w-100">
+                            <button type="submit" class="btn btn-primary mb-3">Guardar Materia</button>
+                        </div>
+                    </div>
+            </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="container mt-5">
+        <div class="row d-flex flex-wrap justify-content-center">
+            <div id="mensaje" class="col-md-6 d-flex flex-wrap justify-content-center h-100 rounded bg-opacity-75">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Grupos</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody id="grupos">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Materias</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody id="materias">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- Enlace a Bootstrap y JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="admin.js" type="module"></script>
+    <script src="nav.js" type="module"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Alumnos</title>
+    <!-- Enlace a Bootstrap 5.x -->
+    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+
+<body>
+    <nav id="navBar" class="navbar navbar-expand-lg navbar-light bg-light">
+    </nav>
+    <div class="container mt-5">
+        <h2>Alta de Alumnos</h2>
+        <form class="mt-5" id="registroForm">
+            <div class="row d-flex flex-wrap justify-content-center">
+                <div id="mensaje" class="col-md-6 d-flex flex-wrap justify-content-center h-100 rounded bg-opacity-75">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
+                </div>
+                <div class="mb-3 col-md-6">
+                    <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
+                    <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno">
+                </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <label for="apellidoMaterno" class="form-label">Apellido Materno</label>
+                    <input type="text" class="form-control" id="apellidoMaterno" name="apellidoMaterno">
+                </div>
+                <div class="mb-3 col-md-4">
+                    <label for="edad" class="form-label">Edad</label>
+                    <input type="number" class="form-control" id="edad" name="edad">
+                </div>
+                <div class="col-md-2 d-flex align-content-end flex-wrap">
+                    <div class="row w-100">
+                        <button type="submit" class="btn btn-primary mb-3">Registrar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="container mt-5">
+        <h2>Alumnos Registrados</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido Paterno</th>
+                    <th scope="col">Apellido Materno</th>
+                    <th scope="col">Edad</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+            </thead>
+            <tbody id="tablaAlumnos">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Enlace a Bootstrap y JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="index.js" type="module"></script>
+    <script src="nav.js" type="module"></script>
+</body>
+
+</html>
