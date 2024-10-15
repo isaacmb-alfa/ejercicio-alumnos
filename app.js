@@ -12,7 +12,7 @@ export class Alumno {
     }
 
     inscribirMateria(materia) {
-        if (!this.materiasInscritas.includes(materia)) {
+        if (!this.materiasInscritas.some(materiaInscrita => materiaInscrita.id === materia.id)) {
             this.materiasInscritas.push(materia);
         }
     }

@@ -7,6 +7,7 @@
     <title>Registro de Alumnos</title>
     <!-- Enlace a Bootstrap 5.x -->
     <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css">
 </head>
 
 <body>
@@ -26,15 +27,22 @@
                 </select>
             </div>
         </form>
+        <div id="alumnoSeleccionado" class="alumno-seleccionado mt-3 form-control d-flex text-primary">
+            <p class="me-2">Sleccione un Alumno para asignar materia</p>
+            <!-- <p class="me-2">Nombre</p>
+                    <p class="me-2">Apellido Paterno</p>
+                    <p class="me-2">Apellido Materno</p>
+                    <p class="me-2">Edad</p> -->
+        </div>
     </div>
     <div class="formulario container">
-        <form class="mt-5" id="registroForm">
+        <form class="mt-5" id="materiasForm">
             <div class="row d-flex flex-wrap justify-content-center">
                 <div id="mensaje" class="col-md-6 d-flex flex-wrap justify-content-center h-100 rounded bg-opacity-75">
                 </div>
             </div>
             <div class="row">
-                <div class="mb-3 col-md-6">
+                <div id="materias" class="mb-3 col-md-6">
                     <label for="materias" class="form-label">Asigna una Materia</label>
                     <select class="form-control" name="materias">
                         <option value="">--Seleccione una Materia--</option>
@@ -44,7 +52,7 @@
                 </div>
                 <div class="mb-3 col-md-4">
                     <label for="calificacion" class="form-label">Calificación</label>
-                    <input type="number" class="form-control" id="calificacion" name="calificacion">
+                    <input inputmode="numeric" type="number" class="form-control" id="calificacion" name="calificacion" min="0" max="10" step="0.1">
                 </div>
                 <div class="col-md-2 d-flex align-content-end flex-wrap">
                     <div class="row w-100">
@@ -57,7 +65,7 @@
     <div class="container mt-5">
         <h2>Listado de Alumnos</h2>
         <div class="row d-grid cards-grupos mt-3" id="cards">
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Card title</h5>
@@ -75,7 +83,7 @@
                             <p class="ms-3 mb-0">9.5</p>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

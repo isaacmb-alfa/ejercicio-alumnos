@@ -1,15 +1,18 @@
+import { Alumno, Grupo } from "./app.js";
+
 const listadoAlumnos = document.getElementById('listadoAlumnos');
 const selectAlumnos = document.getElementById('alumnosInscritosSelect');
 const gruposSelect = document.getElementById('gruposSelect');
 const alumnoMostrar = document.getElementById('alumnoSeleccionado');
 const cards = document.getElementById('cards');
+const alumnosNoAsignados = document.getElementById('alumnosNoAsignados');
 
 //variables locales
 let alumnoSelect = null;
 
 class ActualizarAlumnos {
     constructor() {
-        this.alumnosArray = JSON.parse(localStorage.getItem('alumnos')) || [];
+        this.alumnosArray = this.cargarAlumnos();
     }
     llenarAlumnosLocal() {
         if (this.alumnosArray) {
@@ -23,13 +26,57 @@ class ActualizarAlumnos {
             });
         }
     }
+    cargarAlumnos() {
+        const alumnosGuardados = localStorage.getItem('alumnos');
+        return alumnosGuardados ? JSON.parse(alumnosGuardados) : [];
+    }
+    guardarAlumnos() {
+        localStorage.setItem('alumnosInscritos', JSON.stringify(this.alumnosArray));
+    }
+    agregarAlumno(alumno) {
+        this.alumnosArray.push(alumno);
+        this.guardarAlumnos();
+    }
+    removerAlumno(id) {
+        this.alumnosArray = this.alumnosArray.filter(alumno => alumno.id !== id);
+        this.guardarAlumnos();
+    }
+    contarAlumnosNoAsignados(grupos) {
+        const alumnosAsignados = new Set();
+        grupos.forEach(grupo => {
+            grupo.alumnos.forEach(alumno => {
+                alumnosAsignados.add(alumno.id);
+            })
+        });
+        return this.alumnosArray.filter(alumno => !alumnosAsignados.has(alumno.id)).length
+    }
 }
 class CargarLocal {
     constructor() {
-        this.grupos = this.loadFromLocalStorageGrupos() || [];
+        this.alumnos = this.cargarAlumnos(); // Cargar alumnos como instancias de Alumno
+        this.grupos = this.loadFromLocalStorageGrupos();
     }
+    cargarAlumnos() {
+        const alumnosGuardados = JSON.parse(localStorage.getItem('alumnos'));
+        return alumnosGuardados ? alumnosGuardados.map(alumno => {
+            const nuevoAlumno = new Alumno(alumno.id, alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, alumno.edad);
+            nuevoAlumno.materiasInscritas = alumno.materiasInscritas || [];
+            nuevoAlumno.calificaciones = alumno.calificaciones || {};
+            return nuevoAlumno;
+        }) : [];
+    }
+
     loadFromLocalStorageGrupos() {
-        return JSON.parse(localStorage.getItem('grupos'));
+        const gruposGuardados = JSON.parse(localStorage.getItem('grupos'));
+        return gruposGuardados ? gruposGuardados.map(grupo => {
+            // Crea una nueva instancia de Grupo
+            const nuevoGrupo = Object.assign(new Grupo(grupo.nombre, grupo.id), grupo);
+            // Asegura que los alumnos sean instancias de Alumno y los asigna al grupo
+            nuevoGrupo.alumnos = grupo.alumnos.map(alumno => {
+                return this.alumnos.find(a => a.id === alumno.id) || new Alumno(alumno.id, alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, alumno.edad);
+            });
+            return nuevoGrupo;
+        }) : [];
     }
 }
 
@@ -54,12 +101,22 @@ function imprimirGrupos() {
                     <ul id="alumnosInscritos_${id}" class="list-group list-group-flush">
                     </ul>
                     </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <button class="btn btn-secondary btn-sm boton-promedio" id="botonPromedio" data-grupo-id="${id}">Promedio</button> <span class="col ms-5 border border-secondary rounded p-1 text-end" id="grupoID${id}">0</span>
+                </div>
                 </div>      
         </div>
       `;
         cards.appendChild(card);
         const alumnosInscritos = document.getElementById(`alumnosInscritos_${id}`);
         // console.log(grupo.alumnos);
+        const botonesPromedio = document.querySelectorAll('.boton-promedio');
+        botonesPromedio.forEach(boton => {
+            boton.addEventListener('click', (e) => {
+                const grupoId = e.currentTarget.getAttribute('data-grupo-id');
+                calcularPromedio(grupoId);
+            });
+        });
 
         grupo.alumnos.forEach((alumno) => {
             const li = document.createElement('li');
@@ -87,11 +144,14 @@ cargarGrupos.grupos.forEach((grupo) => {
     const option = document.createElement('option');
     option.value = grupo.id;
     option.innerHTML = grupo.nombre;
-    gruposSelect.querySelector('select').appendChild(option);
+    if (gruposSelect) {
+        gruposSelect.querySelector('select').appendChild(option);
+    }
+
 });
 document.addEventListener('DOMContentLoaded', () => {
     imprimirGrupos();
-})
+});
 selectAlumnos.querySelector('select').addEventListener('change', (e) => {
     const alumnos = new ActualizarAlumnos();
     let alumnoSeleccionado = Number(e.target.value);
@@ -99,60 +159,67 @@ selectAlumnos.querySelector('select').addEventListener('change', (e) => {
         return alumno.id == alumnoSeleccionado;
     });
 
-    if (alumnoFiltrado[0]) {
-        const { id, nombre, apellidoPaterno, apellidoMaterno, edad } = alumnoFiltrado[0];
-        alumnoMostrar.innerHTML = `
+    if (!alumnoFiltrado[0]) {
+        alumnoMostrar.innerHTML = `<p class="me-2">Sleccione un Alumno para asignar grupo</p>`;
+        return;
+    }
+    const { id, nombre, apellidoPaterno, apellidoMaterno, edad } = alumnoFiltrado[0];
+    alumnoMostrar.innerHTML = `
             <p class="me-2">${id}</p>
             <p class="me-2">${nombre}</p>
             <p class="me-2">${apellidoPaterno}</p>
             <p class="me-2">${apellidoMaterno}</p>
-            <p class="me-2">${edad}</p>  
+            <p class="me-2">${edad} años</p>  
     `;
 
-    }
+
     alumnoActivo(alumnoFiltrado[0]);
-    console.log(alumnoSelect);
 
 });
 function alumnoActivo(alumno) {
     alumnoSelect = alumno;
     return alumnoSelect;
 }
-gruposSelect.addEventListener('submit', (e) => {
-    e.preventDefault();
-    // console.log(alumnoSelect);
-    // console.log(e.target[0].value);
-    asignarAGrupo(e);
+if (gruposSelect) {
+    gruposSelect.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // console.log(alumnoSelect);
+        // console.log(e.target[0].value);
+        asignarAGrupo(e);
+    });
+}
 
-
-});
 function asignarAGrupo(e) {
-    const gruposLocalStorage = JSON.parse(localStorage.getItem('grupos')) || [];
+    let grupoNuevo = new CargarLocal();
+    const gruposLocalStorage = grupoNuevo.grupos;
+    const alumnos = new ActualizarAlumnos();
     const yaEstaAsignado = gruposLocalStorage.some(grupo => {
         const alumnoABuscar = grupo.alumnos.some((alumno) => {
             return alumno.id == alumnoSelect.id;
         });
         return alumnoABuscar;
     });
-    if (!yaEstaAsignado) {
-        gruposLocalStorage.forEach((grupo) => {
-            // 
-            if (e.target[0].value === grupo.id) {
-                const alumnoExiste = grupo.alumnos.some((alumno) => {
-                    return alumno.id == alumnoSelect.id;
-                });
-                if (!alumnoExiste) {
-                    grupo.alumnos.push(alumnoSelect);
-                }
-            }
-        });
+    if (yaEstaAsignado) {
+        console.error('El alumno ya está asignado a un grupo');
+        return;
+    }
+    const grupoId = e.target[0].value;
+    const grupoSeleccionado = gruposLocalStorage.find(grupo => grupo.id === grupoId);
+    if (grupoSeleccionado) {
+        grupoSeleccionado.agregarAlumno(alumnoSelect);
+        alumnos.removerAlumno(alumnoSelect.id);
+        alumnos.guardarAlumnos();
+
         actualizarGrupos(gruposLocalStorage);
         imprimirGrupos();
+
+        // Actualizar contador de alumnos no asignados
+        const noAsignados = alumnos.contarAlumnosNoAsignados(gruposLocalStorage);
+        alumnosNoAsignados.textContent = noAsignados;
+        // console.log(`Alumnos no asignados: ${noAsignados}`);
     } else {
-        console.log('El alumno ya esta asignado a un grupo');
-
+        console.error('Grupo no encontrado');
     }
-
 
 }
 function actualizarGrupos(gruposAcualizados) {
@@ -165,7 +232,10 @@ function borrarAlumno(idAlumno, idGrupo) {
             const alumnosFiltrados = grupo.alumnos.filter(alumno => alumno.id !== idAlumno);
             grupo.alumnos = alumnosFiltrados;
         }
-    })
+    });
+    const alumnoEliminar = new ActualizarAlumnos();
+    alumnoEliminar.removerAlumno(idAlumno);
+    actualizarAlumnosNoAsignados();
     actualizarGrupos(gruposLocalStorage);
     imprimirGrupos();
 
@@ -176,3 +246,35 @@ function limpiarCardsHTML() {
         cards.removeChild(cards.firstChild);
     }
 }
+
+function actualizarAlumnosNoAsignados() {
+    const alumnos = new ActualizarAlumnos();
+    const grupos = new CargarLocal();
+    const noAsignados = alumnos.contarAlumnosNoAsignados(grupos.grupos);
+    alumnosNoAsignados.textContent = noAsignados;
+}
+function calcularPromedio(idGrupo) {
+    const grupos = new CargarLocal();
+
+    const grupoFiltrado = grupos.grupos.find(grupo => grupo.id === idGrupo);
+    if (grupoFiltrado) {
+        if (grupoFiltrado.alumnos.length > 0) {
+            const promediosAlumnos = grupoFiltrado.alumnos.map(alumno => {
+
+                return alumno.obtenerPromedio();
+
+            });
+            const promedioGrupo = promediosAlumnos.reduce((sum, promedio) => sum + promedio, 0) / promediosAlumnos.length;
+
+            const spanPromedio = document.getElementById(`grupoID${idGrupo}`);
+            spanPromedio.textContent = promedioGrupo.toFixed(1);
+        } else {
+            console.log(`El grupo no tiene alumnos incritos`);
+        }
+
+    } else {
+        console.log(`Grupo con ID ${idGrupo} no encontrado`);
+    }
+}
+
+actualizarAlumnosNoAsignados();

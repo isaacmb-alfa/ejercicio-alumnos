@@ -34,19 +34,26 @@
 
     </div>
     <div class="alumnos-inscritos container">
-        <form id="alumnosInscritosSelect" action="">
-            <div class="mt-5 col-md-3">
-                <label for="alumnos" class="form-label">Nombre del Alumno</label>
-                <select class="form-control" name="alumnos">
-                    <option value="">--Seleccione Alumno--</option>
-                    <!-- <option value="value2">Value 2</option> -->
-                    <!-- <option value="value3">Value 3</option> -->
-                </select>
-            </div>
+        <div class="row d-flex">
+            <form class="col-3" id="alumnosInscritosSelect" action="">
+                <div class="mt-5">
+                    <label for="alumnos" class="form-label">Nombre del Alumno</label>
+                    <select class="form-control" name="alumnos">
+                        <option value="">--Seleccione Alumno--</option>
+                        <!-- <option value="value2">Value 2</option> -->
+                        <!-- <option value="value3">Value 3</option> -->
+                    </select>
+                </div>
 
-        </form>
+            </form>
+            <div class="col align-content-end">
+                <p>Alumnos no asignados a un Grupo <span id="alumnosNoAsignados">0</span></p>
+            </div>
+        </div>
+
 
         <div id="alumnoSeleccionado" class="alumno-seleccionado mt-3 form-control d-flex text-primary">
+            <p class="me-2">Sleccione un Alumno para asignar Grupo</p>
             <!-- <p class="me-2">Nombre</p>
             <p class="me-2">Apellido Paterno</p>
             <p class="me-2">Apellido Materno</p>
