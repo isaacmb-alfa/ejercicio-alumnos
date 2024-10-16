@@ -144,6 +144,34 @@ export class UI {
         }, 2000);
     }
 }
+export class CargarLocal {
+    constructor() {
+        this.alumnos = this.cargarAlumnos(); // Cargar alumnos como instancias de Alumno
+        this.grupos = this.loadFromLocalStorageGrupos();
+    }
+    cargarAlumnos() {
+        const alumnosGuardados = JSON.parse(localStorage.getItem('alumnos'));
+        return alumnosGuardados ? alumnosGuardados.map(alumno => {
+            const nuevoAlumno = new Alumno(alumno.id, alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, alumno.edad);
+            nuevoAlumno.materiasInscritas = alumno.materiasInscritas || [];
+            nuevoAlumno.calificaciones = alumno.calificaciones || {};
+            return nuevoAlumno;
+        }) : [];
+    }
+
+    loadFromLocalStorageGrupos() {
+        const gruposGuardados = JSON.parse(localStorage.getItem('grupos'));
+        return gruposGuardados ? gruposGuardados.map(grupo => {
+            // Crea una nueva instancia de Grupo
+            const nuevoGrupo = Object.assign(new Grupo(grupo.nombre, grupo.id), grupo);
+            // Asegura que los alumnos sean instancias de Alumno y los asigna al grupo
+            nuevoGrupo.alumnos = grupo.alumnos.map(alumno => {
+                return this.alumnos.find(a => a.id === alumno.id) || new Alumno(alumno.id, alumno.nombre, alumno.apellidoPaterno, alumno.apellidoMaterno, alumno.edad);
+            });
+            return nuevoGrupo;
+        }) : [];
+    }
+}
 
 let ui = new UI;
 

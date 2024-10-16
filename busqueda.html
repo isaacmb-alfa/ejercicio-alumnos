@@ -21,71 +21,39 @@
                     <input type="text" class="form-control" id="busquedaNombre" name="busquedaNombre">
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="buscarApelido" class="form-label">Apellido</label>
-                    <input type="text" class="form-control" id="buscarApelido" name="buscarApelido">
+                    <label for="buscarApellido" class="form-label">Apellido</label>
+                    <input type="text" class="form-control" id="buscarApellido" name="buscarApellido">
                 </div>
                 <div class="container d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary col-4">Buscar</button>
                 </div>
             </div>
-            <form>
-                <fieldset>
-                    <legend>Ordenar</legend>
-                    <div class="input-group">
-                    <div class="input-group-text p-2">
-                        <input class="form-check-input mt-0" type="radio" id="descendente" name="ordenar"
-                            value="descendente" />
-                        <label for="descendente" class="ms-2">Email</label>
-
-                        <input class="form-check-input mt-0 ms-2" type="radio" id="apellidoPaterno" name="ordenar"
-                            value="apellidoPaterno" />
-                        <label for="apellidoPaterno" class="ms-2">Apellido Paterno</label>
-                    </div>
-                    </div>
-                </fieldset>
-            </form>
+        </form>
+        <form action="" id="ordenarForm">
+            <div class="mt-5">
+                <label for="alumnos" class="form-label">Orden de alumnos Apellido Paterno</label>
+                <select class="form-control" name="alumnos">
+                    <option value="">--Seleccione una opción--</option>
+                    <option value="ascendente">Ascendente</option>
+                    <option value="descendente">Descendente</option>
+                    <option value="edad">Edades ⬇️</option>
+                </select>
+            </div>
+        </form>
     </div>
     </div>
     <div class="table-busqueda container mt-5">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Apellido Paterno</th>
                     <th scope="col">Apellido Materno</th>
                     <th scope="col">Edad</th>
-                    <th scope="col">Grupo</th>
                     <th scope="col">Promedio</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Abraham</td>
-                    <td>Perez</td>
-                    <td>Chávez</td>
-                    <td>38 años</td>
-                    <td>1° "A"</td>
-                    <td>8.7</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                    <td>@twitter</td>
-                </tr>
+            <tbody id="alumnosTable">
             </tbody>
         </table>
     </div>
